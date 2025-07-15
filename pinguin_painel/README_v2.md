@@ -1,4 +1,4 @@
-# NUI Ricoz - Versão Moderna v2.0
+# NUI PINGUIN - Versão Moderna v2.0
 
 ## 🎨 Novo Design Moderno
 
