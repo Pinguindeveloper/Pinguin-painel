@@ -1,0 +1,465 @@
+/* ===== CSS CUSTOM PROPERTIES ===== */
+:root {
+  /* Cores Modernas */
+  --bg-primary: #0A0A0F;
+  --bg-secondary: #1A1A24;
+  --bg-surface: #252530;
+  --bg-surface-hover: #2A2A38;
+  
+  --color-primary: #3B82F6;
+  --color-secondary: #8B5CF6;
+  --color-accent: #10B981;
+  --color-warning: #F59E0B;
+  
+  --text-primary: #FFFFFF;
+  --text-secondary: #A1A1AA;
+  --text-muted: #71717A;
+  
+  /* Tipografia */
+  --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-heading: 'Poppins', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  
+  /* Espaçamento (8px base unit) */
+  --space-1: 0.5rem;   /* 8px */
+  --space-2: 1rem;     /* 16px */
+  --space-3: 1.5rem;   /* 24px */
+  --space-4: 2rem;     /* 32px */
+  --space-5: 2.5rem;   /* 40px */
+  --space-6: 3rem;     /* 48px */
+  
+  /* Border Radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  
+  /* Transições */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ===== RESET E BASE ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  display: none;
+  font-family: var(--font-primary);
+  background: linear-gradient(
+    135deg,
+    var(--bg-primary) 0%,
+    #0F0F1A 25%,
+    #1A1A2E 50%,
+    var(--bg-primary) 100%
+  );
+  color: var(--text-primary);
+  overflow: hidden;
+  user-select: none;
+  min-height: 100vh;
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 40% 80%, rgba(16, 185, 129, 0.05) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.app-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 100vh;
+  padding: 3rem;
+  width: 100vw;
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+.ricoz-panel {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+/* ===== SEÇÕES ===== */
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.section-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.section-title {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: 0.025em;
+  position: relative;
+  padding-bottom: var(--space-1);
+}
+
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 3rem;
+  height: 2px;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+  border-radius: 1px;
+}
+
+.section-description {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+/* ===== GRID DE OPÇÕES ===== */
+.options-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-2);
+}
+
+/* ===== CARDS DE OPÇÃO ===== */
+.option-card {
+  position: relative;
+  background: rgba(37, 37, 48, 0.8);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  overflow: hidden;
+  
+  /* Preparação para animações */
+  will-change: transform, background-color, box-shadow;
+}
+
+.option-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  transition: left var(--transition-slow);
+  pointer-events: none;
+}
+
+.option-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  z-index: 2;
+}
+
+.option-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.option-label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.option-title {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  line-height: 1.2;
+}
+
+.option-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  transition: all var(--transition-normal);
+}
+
+.option-icon i {
+  font-size: 1.25rem;
+  color: var(--text-secondary);
+  transition: all var(--transition-normal);
+}
+
+.option-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: radial-gradient(
+    circle,
+    rgba(59, 130, 246, 0.3) 0%,
+    transparent 70%
+  );
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: all var(--transition-normal);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ===== ESTADOS DE HOVER ===== */
+.option-card:hover {
+  transform: translateY(-4px);
+  background: rgba(42, 42, 56, 0.9);
+  border-color: rgba(59, 130, 246, 0.3);
+  box-shadow: 
+    var(--shadow-xl),
+    0 0 0 1px rgba(59, 130, 246, 0.1),
+    0 0 32px rgba(59, 130, 246, 0.2);
+}
+
+.option-card:hover::before {
+  left: 100%;
+}
+
+.option-card:hover .option-icon {
+  background: rgba(59, 130, 246, 0.2);
+  border-color: rgba(59, 130, 246, 0.3);
+  transform: scale(1.1);
+}
+
+.option-card:hover .option-icon i {
+  color: var(--color-primary);
+  transform: scale(1.1);
+}
+
+.option-card:hover .option-glow {
+  width: 200px;
+  height: 200px;
+}
+
+.option-card:hover .option-title {
+  color: var(--color-primary);
+}
+
+/* ===== ESTADOS DE FOCO ===== */
+.option-card:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* ===== ESTADOS DE ATIVO ===== */
+.option-card:active {
+  transform: translateY(-2px) scale(0.98);
+}
+
+/* ===== ANIMAÇÕES ===== */
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-2rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes ripple {
+  from {
+    transform: scale(0);
+    opacity: 1;
+  }
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* ===== ANIMAÇÕES DE ENTRADA ESCALONADAS ===== */
+.section:nth-child(1) {
+  animation: fadeInUp var(--transition-slow) ease-out 0.2s both;
+}
+
+.section:nth-child(2) {
+  animation: fadeInUp var(--transition-slow) ease-out 0.4s both;
+}
+
+.option-card:nth-child(1) {
+  animation: fadeInUp var(--transition-normal) ease-out 0.3s both;
+}
+
+.option-card:nth-child(2) {
+  animation: fadeInUp var(--transition-normal) ease-out 0.4s both;
+}
+
+/* ===== EFEITO RIPPLE ===== */
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(0);
+  animation: ripple 0.6s linear;
+  pointer-events: none;
+}
+
+/* ===== RESPONSIVIDADE ===== */
+@media (max-width: 768px) {
+  .app-container {
+    padding: var(--space-4);
+  }
+  
+  .ricoz-panel {
+    max-width: 100%;
+  }
+  
+  .section-title {
+    font-size: 1.25rem;
+  }
+  
+  .option-card {
+    padding: var(--space-3);
+  }
+  
+  .option-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+  
+  .option-icon i {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .app-container {
+    padding: var(--space-3);
+  }
+  
+  .section-title {
+    font-size: 1.125rem;
+  }
+  
+  .option-title {
+    font-size: 0.875rem;
+  }
+  
+  .option-label {
+    font-size: 0.6875rem;
+  }
+}
+
+/* ===== MELHORIAS DE PERFORMANCE ===== */
+.option-card,
+.option-icon,
+.option-glow {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* ===== ESTADOS ESPECIAIS ===== */
+.option-card.clicked {
+  transform: translateY(-2px) scale(0.95);
+  transition: transform 0.1s ease;
+}
+
+.option-card.loading {
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.option-card.loading .option-icon {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* FORÇAR VISIBILIDADE DO PAINEL */
+.app-container, .ricoz-panel, .section, .option-card, .option-content, .option-info, .option-label, .option-title, .option-icon, .option-glow {
+  opacity: 1 !important;
+  visibility: visible !important;
+  color: #fff !important;
+  /* background: rgba(37, 37, 48, 0.8) !important; */
+}
+
+* {
+  color: #fff !important;
+}
+
