@@ -1,4 +1,4 @@
-# NUI Ricoz - Painel de Kits Melhorado
+# NUI PINGUIN - Painel de Kits Melhorado
 
 ## Descrição
 Este projeto é uma versão melhorada da NUI (Native User Interface) para FiveM, mantendo os mesmos ícones originais mas com um design moderno e responsivo.
